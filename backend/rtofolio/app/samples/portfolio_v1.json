@@ -1,0 +1,295 @@
+{
+  "schema_version": "v1",
+  "theme": {
+    "style": "modern",
+    "color_palette": "dark",
+    "font": "sans-serif",
+    "tone": "professional",
+    "max_width": "1280px",
+    "width": "100%",
+    "margin": "0 auto",
+    "display": "flex",
+    "flex_direction": "column",
+    "align_items": "center"
+  },
+  "sections": [
+    {
+      "type": "navbar",
+      "priority": null,
+      "layout": {
+        "desktop": {
+          "type": "flex",
+          "gap": "2rem",
+          "align": "center",
+          "justify": "space-between",
+          "slots": {
+            "left": [
+              { "name": "logo", "optional": true, "type": "image" },
+              { "name": "name", "type": "text" }
+            ],
+            "right": [
+              { "name": "links" },
+              { "name": "cta", "optional": true }
+            ]
+          }
+        },
+        "mobile": {
+          "type": "collapsed_nav"
+        }
+      },
+      "props": {
+        "logo": "https://cdn-icons-png.flaticon.com/512/711/711284.png",
+        "name": "DevPortfolio",
+        "cta_label": "Contact Me",
+        "links": [
+          { "label": "About", "url": "#about" },
+          { "label": "Projects", "url": "#projects" },
+          { "label": "Experience", "url": "#experience" }
+        ]
+      },
+      "items": null,
+      "item_layout": null
+    },
+    {
+      "type": "hero",
+      "priority": "high",
+      "layout": {
+        "desktop": {
+          "type": "grid",
+          "slots": {
+            "left": ["text", "cta"],
+            "right": "image"
+          }
+        },
+        "mobile": {
+          "type": "flex_column"
+        }
+      },
+      "props": {
+        "name": "Mahir Mohammed Labib",
+        "hero_text": "Building scalable web applications with modern technologies.",
+        "cta_label": "Download Resume",
+        "cta_url": "/resume.pdf",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
+      },
+      "items": null,
+      "item_layout": null
+    },
+    {
+      "type": "skills",
+      "priority": null,
+      "layout": {
+        "type": "flex",
+        "gap": "1.5rem",
+        "columns": {
+          "desktop": 5,
+          "mobile": 2
+        }
+      },
+      "props": null,
+      "items": [
+        {
+          "name": "React",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+        },
+        {
+          "name": "TypeScript",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+        },
+        {
+          "name": "Node.js",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+        },
+        {
+          "name": "Next.js",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+        },
+        {
+          "name": "Tailwind",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg"
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+        },
+        {
+          "name": "JavaScript",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+        },
+        {
+          "name": "HTML5",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+        },
+        {
+          "name": "CSS3",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+        },
+        {
+          "name": "Docker",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+        },
+        {
+          "name": "Git",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+        },
+        {
+          "name": "MongoDB",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+        },
+        {
+          "name": "GraphQL",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg"
+        },
+        {
+          "name": "Redux",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg"
+        },
+        {
+          "name": "Python",
+          "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+        }
+      ],
+      "item_layout": {
+        "type": "card",
+        "layout": {
+          "type": "flex_column",
+          "align": "center",
+          "gap": "0.5rem"
+        },
+        "slots": [
+          { "name": "icon", "optional": true, "type": "image" },
+          { "name": "skill_name", "type": "text" }
+        ]
+      }
+    },
+    {
+      "type": "experience",
+      "priority": "medium",
+      "layout": {
+        "type": "unordered_list",
+        "direction": "column"
+      },
+      "props": null,
+      "items": [
+        {
+          "role": "Senior Frontend Engineer",
+          "company": "Tech Solutions Inc.",
+          "date": "2021 - Present",
+          "description": "Led the migration of a legacy angular app to Next.js, improving load times by 40%. Managed a team of 4 junior developers."
+        },
+        {
+          "role": "Software Developer",
+          "company": "Creative Agency",
+          "date": "2019 - 2021",
+          "description": "Developed interactive landing pages for high-profile clients using React and GSAP. Collaborated closely with designers."
+        },
+        {
+          "role": "Full Stack Engineer",
+          "company": "StartUp Flow",
+          "date": "2018 - 2019",
+          "description": "Built and maintained RESTful APIs using Node.js and Express. Integrated third-party payment gateways like Stripe and PayPal."
+        },
+        {
+          "role": "Junior Web Developer",
+          "company": "WebCorp Ltd.",
+          "date": "2017 - 2018",
+          "description": "Assisted in the development of client websites using HTML, CSS, and jQuery. Optimized images and assets for faster page load speeds."
+        },
+        {
+          "role": "Frontend Intern",
+          "company": "Innovate Tech",
+          "date": "Summer 2016",
+          "description": "Collaborated with the UX team to prototype new dashboard features. Fixed cross-browser compatibility issues for IE11 and Safari."
+        },
+        {
+          "role": "Freelance Developer",
+          "company": "Self-Employed",
+          "date": "2015 - 2017",
+          "description": "Delivered custom WordPress themes and plugins for small business clients. Managed domain hosting and server configurations."
+        },
+        {
+          "role": "Open Source Contributor",
+          "company": "Community Projects",
+          "date": "2015 - Present",
+          "description": "Contributed bug fixes and documentation improvements to popular React component libraries. Mentored first-time contributors on GitHub."
+        }
+      ],
+      "item_layout": null
+    },
+    {
+      "type": "projects",
+      "priority": "high",
+      "layout": {
+        "type": "flex",
+        "direction": "column",
+        "gap": "1.5rem",
+        "width": "100%",
+        "max_width": "1280px",
+        "columns": {
+          "desktop": 1,
+          "mobile": 1
+        },
+        "margin": "20px 0 20px 0"
+      },
+      "props": null,
+      "items": [
+        {
+          "id": "1",
+          "title": "E-Commerce Dashboard",
+          "description": "A comprehensive dashboard for managing online store inventory and orders. Built with Next.js and Tailwind CSS.",
+          "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500&q=80",
+          "link_url": "https://github.com"
+        },
+        {
+          "id": "2",
+          "title": "Task Management App",
+          "description": "A productivity tool that helps teams organize and prioritize tasks. Features real-time updates using WebSockets.",
+          "image": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=500&q=80",
+          "link_url": "https://github.com"
+        },
+        {
+          "id": "3",
+          "title": "AI Image Generator",
+          "description": "An interface for generating images using Stable Diffusion API. Includes a gallery and prompt history.",
+          "image": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=500&q=80",
+          "link_url": "https://github.com"
+        }
+      ],
+      "item_layout": {
+        "type": "card",
+        "constraints": {
+          "max_width": "1280px"
+        }
+      }
+    },
+    {
+      "type": "footer",
+      "priority": null,
+      "layout": {
+        "type": "grid",
+        "columns": {
+          "desktop": 2,
+          "mobile": 1
+        },
+        "slots": {
+          "left": [
+            { "name": "logo", "type": "image" },
+            { "name": "name", "type": "text" }
+          ],
+          "right": [{ "name": "links", "type": "list" }]
+        }
+      },
+      "props": {
+        "logo": "https://cdn-icons-png.flaticon.com/512/711/711284.png",
+        "name": "Mahir Labib",
+        "links": [
+          { "label": "GitHub", "url": "https://github.com" },
+          { "label": "LinkedIn", "url": "https://linkedin.com" },
+          { "label": "Twitter", "url": "https://twitter.com" }
+        ]
+      },
+      "items": null,
+      "item_layout": null
+    }
+  ]
+}
