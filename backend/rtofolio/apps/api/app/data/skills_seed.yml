@@ -1,0 +1,1143 @@
+# JobFit Copilot - Canonical Skills Catalog
+# This file seeds the skills table with normalized skill definitions.
+# 
+# Structure:
+#   - canonical_name: Unique identifier (lowercase, no spaces)
+#   - display_name: Human-readable name
+#   - category: Primary category for grouping
+#   - subcategory: Optional finer grouping
+#   - aliases: Alternative names/spellings to normalize
+#   - related_skills: Skills often used together
+#   - is_trending: Hot skill in current market
+
+skills:
+  # ===================
+  # PROGRAMMING LANGUAGES
+  # ===================
+  - canonical_name: python
+    display_name: Python
+    category: language
+    subcategory: general_purpose
+    aliases:
+      - py
+      - python3
+      - python 3
+      - cpython
+    related_skills:
+      - django
+      - fastapi
+      - flask
+      - pandas
+      - numpy
+    is_trending: true
+
+  - canonical_name: javascript
+    display_name: JavaScript
+    category: language
+    subcategory: web
+    aliases:
+      - js
+      - java script
+      - ecmascript
+      - es6
+      - es2015
+      - es2020
+      - es2021
+      - es2022
+    related_skills:
+      - typescript
+      - react
+      - node.js
+      - vue
+      - angular
+    is_trending: true
+
+  - canonical_name: typescript
+    display_name: TypeScript
+    category: language
+    subcategory: web
+    aliases:
+      - ts
+      - type script
+    related_skills:
+      - javascript
+      - react
+      - node.js
+      - angular
+    is_trending: true
+
+  - canonical_name: java
+    display_name: Java
+    category: language
+    subcategory: general_purpose
+    aliases:
+      - java8
+      - java11
+      - java17
+      - java 8
+      - java 11
+      - java 17
+      - jdk
+      - jvm
+    related_skills:
+      - spring
+      - spring-boot
+      - maven
+      - gradle
+      - hibernate
+
+  - canonical_name: go
+    display_name: Go
+    category: language
+    subcategory: systems
+    aliases:
+      - golang
+      - go lang
+      - go language
+    related_skills:
+      - kubernetes
+      - docker
+      - grpc
+    is_trending: true
+
+  - canonical_name: rust
+    display_name: Rust
+    category: language
+    subcategory: systems
+    aliases:
+      - rustlang
+      - rust lang
+    related_skills:
+      - c++
+      - webassembly
+    is_trending: true
+
+  - canonical_name: c++
+    display_name: C++
+    category: language
+    subcategory: systems
+    aliases:
+      - cpp
+      - c plus plus
+      - cplusplus
+      - c++11
+      - c++14
+      - c++17
+      - c++20
+    related_skills:
+      - c
+      - rust
+
+  - canonical_name: c
+    display_name: C
+    category: language
+    subcategory: systems
+    aliases:
+      - ansi c
+      - c language
+    related_skills:
+      - c++
+      - embedded
+
+  - canonical_name: c#
+    display_name: C#
+    category: language
+    subcategory: general_purpose
+    aliases:
+      - csharp
+      - c sharp
+      - cs
+      - dotnet
+      - .net
+    related_skills:
+      - asp.net
+      - entity-framework
+      - azure
+
+  - canonical_name: ruby
+    display_name: Ruby
+    category: language
+    subcategory: scripting
+    aliases:
+      - rb
+    related_skills:
+      - rails
+      - ruby-on-rails
+
+  - canonical_name: php
+    display_name: PHP
+    category: language
+    subcategory: web
+    aliases:
+      - php7
+      - php8
+    related_skills:
+      - laravel
+      - symfony
+      - wordpress
+
+  - canonical_name: swift
+    display_name: Swift
+    category: language
+    subcategory: mobile
+    aliases:
+      - swift5
+    related_skills:
+      - ios
+      - xcode
+      - swiftui
+
+  - canonical_name: kotlin
+    display_name: Kotlin
+    category: language
+    subcategory: mobile
+    aliases:
+      - kt
+    related_skills:
+      - android
+      - java
+      - spring
+    is_trending: true
+
+  - canonical_name: scala
+    display_name: Scala
+    category: language
+    subcategory: jvm
+    aliases: []
+    related_skills:
+      - spark
+      - java
+      - akka
+
+  - canonical_name: r
+    display_name: R
+    category: language
+    subcategory: data_science
+    aliases:
+      - rlang
+      - r language
+    related_skills:
+      - python
+      - statistics
+      - data-analysis
+
+  - canonical_name: sql
+    display_name: SQL
+    category: language
+    subcategory: query
+    aliases:
+      - structured query language
+    related_skills:
+      - postgresql
+      - mysql
+      - sql-server
+
+  # ===================
+  # FRONTEND FRAMEWORKS
+  # ===================
+  - canonical_name: react
+    display_name: React
+    category: framework
+    subcategory: frontend
+    aliases:
+      - reactjs
+      - react.js
+      - react js
+    related_skills:
+      - javascript
+      - typescript
+      - redux
+      - next.js
+    is_trending: true
+
+  - canonical_name: vue
+    display_name: Vue.js
+    category: framework
+    subcategory: frontend
+    aliases:
+      - vuejs
+      - vue.js
+      - vue js
+      - vue3
+      - vue 3
+    related_skills:
+      - javascript
+      - nuxt
+      - vuex
+
+  - canonical_name: angular
+    display_name: Angular
+    category: framework
+    subcategory: frontend
+    aliases:
+      - angularjs
+      - angular.js
+      - angular 2+
+    related_skills:
+      - typescript
+      - rxjs
+
+  - canonical_name: svelte
+    display_name: Svelte
+    category: framework
+    subcategory: frontend
+    aliases:
+      - sveltejs
+      - sveltekit
+    related_skills:
+      - javascript
+    is_trending: true
+
+  - canonical_name: next.js
+    display_name: Next.js
+    category: framework
+    subcategory: frontend
+    aliases:
+      - nextjs
+      - next js
+    related_skills:
+      - react
+      - vercel
+    is_trending: true
+
+  - canonical_name: nuxt
+    display_name: Nuxt.js
+    category: framework
+    subcategory: frontend
+    aliases:
+      - nuxtjs
+      - nuxt.js
+    related_skills:
+      - vue
+      - javascript
+
+  # ===================
+  # BACKEND FRAMEWORKS
+  # ===================
+  - canonical_name: django
+    display_name: Django
+    category: framework
+    subcategory: backend
+    aliases:
+      - django rest framework
+      - drf
+    related_skills:
+      - python
+      - postgresql
+      - rest-api
+
+  - canonical_name: flask
+    display_name: Flask
+    category: framework
+    subcategory: backend
+    aliases:
+      - flask api
+    related_skills:
+      - python
+      - rest-api
+
+  - canonical_name: fastapi
+    display_name: FastAPI
+    category: framework
+    subcategory: backend
+    aliases:
+      - fast api
+      - fast-api
+    related_skills:
+      - python
+      - pydantic
+      - async
+    is_trending: true
+
+  - canonical_name: spring
+    display_name: Spring
+    category: framework
+    subcategory: backend
+    aliases:
+      - spring framework
+      - spring boot
+      - spring-boot
+      - springboot
+    related_skills:
+      - java
+      - hibernate
+      - maven
+
+  - canonical_name: express
+    display_name: Express.js
+    category: framework
+    subcategory: backend
+    aliases:
+      - expressjs
+      - express.js
+    related_skills:
+      - node.js
+      - javascript
+
+  - canonical_name: rails
+    display_name: Ruby on Rails
+    category: framework
+    subcategory: backend
+    aliases:
+      - ruby on rails
+      - ror
+      - rails api
+    related_skills:
+      - ruby
+      - postgresql
+
+  - canonical_name: laravel
+    display_name: Laravel
+    category: framework
+    subcategory: backend
+    aliases: []
+    related_skills:
+      - php
+      - mysql
+
+  - canonical_name: asp.net
+    display_name: ASP.NET
+    category: framework
+    subcategory: backend
+    aliases:
+      - asp.net core
+      - aspnet
+      - asp net
+      - .net core
+    related_skills:
+      - c#
+      - entity-framework
+
+  - canonical_name: node.js
+    display_name: Node.js
+    category: framework
+    subcategory: runtime
+    aliases:
+      - nodejs
+      - node js
+      - node
+    related_skills:
+      - javascript
+      - typescript
+      - express
+      - npm
+
+  # ===================
+  # DATABASES
+  # ===================
+  - canonical_name: postgresql
+    display_name: PostgreSQL
+    category: database
+    subcategory: relational
+    aliases:
+      - postgres
+      - pg
+      - psql
+    related_skills:
+      - sql
+      - database-design
+
+  - canonical_name: mysql
+    display_name: MySQL
+    category: database
+    subcategory: relational
+    aliases:
+      - my sql
+      - mariadb
+    related_skills:
+      - sql
+      - database-design
+
+  - canonical_name: mongodb
+    display_name: MongoDB
+    category: database
+    subcategory: nosql
+    aliases:
+      - mongo
+      - mongo db
+    related_skills:
+      - nosql
+      - mongoose
+
+  - canonical_name: redis
+    display_name: Redis
+    category: database
+    subcategory: cache
+    aliases:
+      - redis cache
+    related_skills:
+      - caching
+      - message-queue
+
+  - canonical_name: elasticsearch
+    display_name: Elasticsearch
+    category: database
+    subcategory: search
+    aliases:
+      - elastic search
+      - elastic
+      - es
+      - elk
+    related_skills:
+      - kibana
+      - logstash
+
+  - canonical_name: dynamodb
+    display_name: DynamoDB
+    category: database
+    subcategory: nosql
+    aliases:
+      - dynamo db
+      - dynamo
+      - aws dynamodb
+    related_skills:
+      - aws
+      - nosql
+
+  - canonical_name: cassandra
+    display_name: Cassandra
+    category: database
+    subcategory: nosql
+    aliases:
+      - apache cassandra
+    related_skills:
+      - distributed-systems
+      - nosql
+
+  - canonical_name: sql-server
+    display_name: SQL Server
+    category: database
+    subcategory: relational
+    aliases:
+      - mssql
+      - microsoft sql server
+      - ms sql
+      - tsql
+      - t-sql
+    related_skills:
+      - sql
+      - c#
+
+  # ===================
+  # CLOUD & DEVOPS
+  # ===================
+  - canonical_name: aws
+    display_name: AWS
+    category: cloud
+    subcategory: provider
+    aliases:
+      - amazon web services
+      - amazon aws
+    related_skills:
+      - ec2
+      - s3
+      - lambda
+      - cloudformation
+    is_trending: true
+
+  - canonical_name: gcp
+    display_name: Google Cloud Platform
+    category: cloud
+    subcategory: provider
+    aliases:
+      - google cloud
+      - gce
+      - google cloud platform
+    related_skills:
+      - bigquery
+      - kubernetes
+
+  - canonical_name: azure
+    display_name: Microsoft Azure
+    category: cloud
+    subcategory: provider
+    aliases:
+      - microsoft azure
+      - azure cloud
+    related_skills:
+      - c#
+      - .net
+
+  - canonical_name: docker
+    display_name: Docker
+    category: devops
+    subcategory: containerization
+    aliases:
+      - docker containers
+      - dockerfile
+      - docker-compose
+      - docker compose
+    related_skills:
+      - kubernetes
+      - containerization
+    is_trending: true
+
+  - canonical_name: kubernetes
+    display_name: Kubernetes
+    category: devops
+    subcategory: orchestration
+    aliases:
+      - k8s
+      - kube
+      - k8
+    related_skills:
+      - docker
+      - helm
+      - container-orchestration
+    is_trending: true
+
+  - canonical_name: terraform
+    display_name: Terraform
+    category: devops
+    subcategory: iac
+    aliases:
+      - hashicorp terraform
+      - tf
+    related_skills:
+      - aws
+      - infrastructure-as-code
+    is_trending: true
+
+  - canonical_name: jenkins
+    display_name: Jenkins
+    category: devops
+    subcategory: ci_cd
+    aliases:
+      - jenkins ci
+      - jenkins pipeline
+    related_skills:
+      - ci-cd
+      - groovy
+
+  - canonical_name: github-actions
+    display_name: GitHub Actions
+    category: devops
+    subcategory: ci_cd
+    aliases:
+      - gh actions
+      - github action
+    related_skills:
+      - git
+      - ci-cd
+    is_trending: true
+
+  - canonical_name: gitlab-ci
+    display_name: GitLab CI/CD
+    category: devops
+    subcategory: ci_cd
+    aliases:
+      - gitlab ci
+      - gitlab pipeline
+    related_skills:
+      - git
+      - ci-cd
+
+  - canonical_name: ansible
+    display_name: Ansible
+    category: devops
+    subcategory: configuration
+    aliases:
+      - ansible playbook
+    related_skills:
+      - infrastructure-as-code
+      - linux
+
+  - canonical_name: helm
+    display_name: Helm
+    category: devops
+    subcategory: kubernetes
+    aliases:
+      - helm charts
+      - helm chart
+    related_skills:
+      - kubernetes
+
+  - canonical_name: prometheus
+    display_name: Prometheus
+    category: devops
+    subcategory: monitoring
+    aliases:
+      - prometheus monitoring
+    related_skills:
+      - grafana
+      - monitoring
+      - kubernetes
+
+  - canonical_name: grafana
+    display_name: Grafana
+    category: devops
+    subcategory: monitoring
+    aliases: []
+    related_skills:
+      - prometheus
+      - monitoring
+
+  # ===================
+  # ML & DATA SCIENCE
+  # ===================
+  - canonical_name: tensorflow
+    display_name: TensorFlow
+    category: ml_ai
+    subcategory: framework
+    aliases:
+      - tf
+      - tensor flow
+    related_skills:
+      - python
+      - deep-learning
+      - keras
+
+  - canonical_name: pytorch
+    display_name: PyTorch
+    category: ml_ai
+    subcategory: framework
+    aliases:
+      - py torch
+      - torch
+    related_skills:
+      - python
+      - deep-learning
+    is_trending: true
+
+  - canonical_name: scikit-learn
+    display_name: Scikit-learn
+    category: ml_ai
+    subcategory: library
+    aliases:
+      - sklearn
+      - sci-kit learn
+      - scikit learn
+    related_skills:
+      - python
+      - machine-learning
+
+  - canonical_name: pandas
+    display_name: Pandas
+    category: ml_ai
+    subcategory: data_processing
+    aliases:
+      - python pandas
+    related_skills:
+      - python
+      - numpy
+      - data-analysis
+
+  - canonical_name: numpy
+    display_name: NumPy
+    category: ml_ai
+    subcategory: data_processing
+    aliases:
+      - np
+    related_skills:
+      - python
+      - pandas
+
+  - canonical_name: spark
+    display_name: Apache Spark
+    category: ml_ai
+    subcategory: big_data
+    aliases:
+      - pyspark
+      - spark sql
+      - apache spark
+    related_skills:
+      - python
+      - scala
+      - big-data
+
+  - canonical_name: huggingface
+    display_name: Hugging Face
+    category: ml_ai
+    subcategory: nlp
+    aliases:
+      - hugging face
+      - transformers
+      - hf
+    related_skills:
+      - nlp
+      - pytorch
+      - python
+    is_trending: true
+
+  - canonical_name: langchain
+    display_name: LangChain
+    category: ml_ai
+    subcategory: llm
+    aliases:
+      - lang chain
+    related_skills:
+      - llm
+      - python
+      - openai
+    is_trending: true
+
+  - canonical_name: llm
+    display_name: Large Language Models
+    category: ml_ai
+    subcategory: ai
+    aliases:
+      - large language model
+      - llms
+      - gpt
+      - chatgpt
+    related_skills:
+      - prompt-engineering
+      - langchain
+    is_trending: true
+
+  # ===================
+  # API & ARCHITECTURE
+  # ===================
+  - canonical_name: rest-api
+    display_name: REST APIs
+    category: backend
+    subcategory: api
+    aliases:
+      - rest
+      - restful
+      - restful api
+      - restful apis
+      - rest api design
+    related_skills:
+      - http
+      - json
+      - api-design
+
+  - canonical_name: graphql
+    display_name: GraphQL
+    category: backend
+    subcategory: api
+    aliases:
+      - graph ql
+    related_skills:
+      - apollo
+      - api-design
+
+  - canonical_name: grpc
+    display_name: gRPC
+    category: backend
+    subcategory: api
+    aliases:
+      - g rpc
+      - grpc-go
+    related_skills:
+      - protobuf
+      - microservices
+
+  - canonical_name: microservices
+    display_name: Microservices
+    category: backend
+    subcategory: architecture
+    aliases:
+      - microservice architecture
+      - micro services
+    related_skills:
+      - docker
+      - kubernetes
+      - api-gateway
+
+  - canonical_name: message-queue
+    display_name: Message Queues
+    category: backend
+    subcategory: architecture
+    aliases:
+      - message queuing
+      - mq
+      - pub/sub
+      - pubsub
+    related_skills:
+      - kafka
+      - rabbitmq
+      - redis
+
+  - canonical_name: kafka
+    display_name: Apache Kafka
+    category: backend
+    subcategory: streaming
+    aliases:
+      - apache kafka
+    related_skills:
+      - message-queue
+      - distributed-systems
+
+  - canonical_name: rabbitmq
+    display_name: RabbitMQ
+    category: backend
+    subcategory: messaging
+    aliases:
+      - rabbit mq
+    related_skills:
+      - message-queue
+
+  # ===================
+  # TESTING
+  # ===================
+  - canonical_name: unit-testing
+    display_name: Unit Testing
+    category: testing
+    subcategory: methodology
+    aliases:
+      - unit tests
+    related_skills:
+      - tdd
+      - pytest
+      - jest
+
+  - canonical_name: pytest
+    display_name: pytest
+    category: testing
+    subcategory: framework
+    aliases:
+      - py.test
+    related_skills:
+      - python
+      - unit-testing
+
+  - canonical_name: jest
+    display_name: Jest
+    category: testing
+    subcategory: framework
+    aliases: []
+    related_skills:
+      - javascript
+      - react
+      - unit-testing
+
+  - canonical_name: cypress
+    display_name: Cypress
+    category: testing
+    subcategory: e2e
+    aliases:
+      - cypress.io
+    related_skills:
+      - e2e-testing
+      - javascript
+
+  - canonical_name: selenium
+    display_name: Selenium
+    category: testing
+    subcategory: automation
+    aliases:
+      - selenium webdriver
+    related_skills:
+      - e2e-testing
+      - python
+
+  # ===================
+  # VERSION CONTROL
+  # ===================
+  - canonical_name: git
+    display_name: Git
+    category: tool
+    subcategory: version_control
+    aliases:
+      - git version control
+      - gitflow
+    related_skills:
+      - github
+      - gitlab
+
+  - canonical_name: github
+    display_name: GitHub
+    category: tool
+    subcategory: platform
+    aliases:
+      - git hub
+    related_skills:
+      - git
+      - github-actions
+
+  # ===================
+  # SOFT SKILLS
+  # ===================
+  - canonical_name: communication
+    display_name: Communication
+    category: soft_skill
+    subcategory: interpersonal
+    aliases:
+      - written communication
+      - verbal communication
+      - communication skills
+    related_skills:
+      - documentation
+      - presentation
+
+  - canonical_name: leadership
+    display_name: Leadership
+    category: soft_skill
+    subcategory: management
+    aliases:
+      - team leadership
+      - tech lead
+      - technical leadership
+    related_skills:
+      - mentoring
+      - management
+
+  - canonical_name: mentoring
+    display_name: Mentoring
+    category: soft_skill
+    subcategory: management
+    aliases:
+      - mentorship
+      - coaching
+    related_skills:
+      - leadership
+
+  - canonical_name: problem-solving
+    display_name: Problem Solving
+    category: soft_skill
+    subcategory: cognitive
+    aliases:
+      - analytical thinking
+      - critical thinking
+    related_skills:
+      - system-design
+
+  - canonical_name: collaboration
+    display_name: Collaboration
+    category: soft_skill
+    subcategory: interpersonal
+    aliases:
+      - teamwork
+      - cross-functional
+      - team collaboration
+    related_skills:
+      - communication
+      - agile
+
+  # ===================
+  # METHODOLOGIES
+  # ===================
+  - canonical_name: agile
+    display_name: Agile
+    category: methodology
+    subcategory: process
+    aliases:
+      - agile methodology
+      - agile development
+    related_skills:
+      - scrum
+      - kanban
+
+  - canonical_name: scrum
+    display_name: Scrum
+    category: methodology
+    subcategory: process
+    aliases:
+      - scrum master
+    related_skills:
+      - agile
+      - sprint-planning
+
+  - canonical_name: tdd
+    display_name: Test-Driven Development
+    category: methodology
+    subcategory: development
+    aliases:
+      - test driven development
+    related_skills:
+      - unit-testing
+      - bdd
+
+  - canonical_name: ci-cd
+    display_name: CI/CD
+    category: methodology
+    subcategory: devops
+    aliases:
+      - continuous integration
+      - continuous deployment
+      - continuous delivery
+      - cicd
+    related_skills:
+      - jenkins
+      - github-actions
+      - devops
+
+  # ===================
+  # SYSTEM DESIGN
+  # ===================
+  - canonical_name: system-design
+    display_name: System Design
+    category: backend
+    subcategory: architecture
+    aliases:
+      - systems design
+      - architecture design
+      - software architecture
+    related_skills:
+      - distributed-systems
+      - scalability
+
+  - canonical_name: distributed-systems
+    display_name: Distributed Systems
+    category: backend
+    subcategory: architecture
+    aliases:
+      - distributed computing
+    related_skills:
+      - system-design
+      - microservices
+      - kafka
+
+  - canonical_name: scalability
+    display_name: Scalability
+    category: backend
+    subcategory: architecture
+    aliases:
+      - scaling
+      - horizontal scaling
+      - vertical scaling
+    related_skills:
+      - system-design
+      - load-balancing
+
+  - canonical_name: api-design
+    display_name: API Design
+    category: backend
+    subcategory: architecture
+    aliases:
+      - api architecture
+    related_skills:
+      - rest-api
+      - graphql
+      - documentation
+
+  # ===================
+  # SECURITY
+  # ===================
+  - canonical_name: oauth
+    display_name: OAuth
+    category: security
+    subcategory: authentication
+    aliases:
+      - oauth2
+      - oauth 2.0
+      - openid connect
+      - oidc
+    related_skills:
+      - jwt
+      - authentication
+
+  - canonical_name: jwt
+    display_name: JWT
+    category: security
+    subcategory: authentication
+    aliases:
+      - json web token
+      - json web tokens
+    related_skills:
+      - oauth
+      - authentication
+
+  - canonical_name: security-best-practices
+    display_name: Security Best Practices
+    category: security
+    subcategory: general
+    aliases:
+      - secure coding
+      - application security
+      - appsec
+    related_skills:
+      - owasp
+      - encryption
