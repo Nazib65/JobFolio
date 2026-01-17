@@ -15,7 +15,7 @@ const ProjectsSection = ({ section }: { section: Projects }) => {
   // Layout affects the inner container, not the section wrapper
   const containerStyle: CSSProperties = {
     display: layout?.type || "flex",
-    flexDirection: (layout?.direction as CSSProperties["flexDirection"]) || "column",
+    flexDirection: "row",
     gap: layout?.gap || "1rem",
     width: "100%",
     // Default to stretch so cards align with other section content; schema can override.
@@ -25,7 +25,7 @@ const ProjectsSection = ({ section }: { section: Projects }) => {
 
   const cardStyle = {
     maxWidth: itemLayout?.constraints?.maxWidth,
-    width: "100%",
+    width: "32rem",
     border: "1px solid #e5e7eb",
     borderRadius: "12px",
     padding: "16px",
@@ -39,6 +39,7 @@ const ProjectsSection = ({ section }: { section: Projects }) => {
 
   return (
     <section style={outerSectionStyle}>
+      <h2 style={{ margin: 0 }} className="text-foreground font-bold text-2xl mt-4 mb-4 text-center py-4 leading-tight">Projects</h2>
       <div style={containerStyle}>
         {(items || []).map((project: any, idx: number) => (
           <div key={project.id || idx} style={cardStyle}>
@@ -87,7 +88,7 @@ const ProjectsSection = ({ section }: { section: Projects }) => {
                     padding: "10px 12px",
                   }}
                 >
-                  <button className="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive">
+                  <button className="w-full cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive">
                     Live Link
                   </button>
                 </a>
