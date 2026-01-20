@@ -103,24 +103,25 @@ const RtoFolio = () => {
 
     if (loading) {
         return (
-            <>
-                <h1>R TO Folio</h1>
-                <p>Loading...</p>
-            </>
+            <div className="flex flex-col items-center justify-center min-h-screen gap-4 bg-ui-background">
+                <h1 className="text-4xl font-bold text-ui-foreground">R TO Folio</h1>
+                <p className="text-ui-muted-foreground">Loading...</p>
+            </div>
         )
     }
 
     if (error){
         return(
-            <>
-            <p>{error}</p>
-            </>
+            <div className="flex flex-col items-center justify-center min-h-screen gap-4 bg-ui-background">
+                <h1 className="text-4xl font-bold text-ui-foreground">R TO Folio</h1>
+                <p className="text-ui-destructive">{error}</p>
+            </div>
         )
     }
 
     return(
-        <div className="flex flex-col items-center justify-center min-h-screen gap-6 p-4">
-            <h1 className="text-4xl font-bold">R TO Folio</h1>
+        <div className="flex flex-col items-center justify-center min-h-screen gap-6 p-4 bg-ui-background">
+            <h1 className="text-4xl font-bold text-ui-foreground">R TO Folio</h1>
             
             <div className="flex flex-col items-center gap-4 w-full max-w-md">
                 <input
@@ -133,7 +134,7 @@ const RtoFolio = () => {
                 
                 <Button 
                     onClick={handleUploadClick}
-                    className="w-full"
+                    className="w-full border-ui-border hover:bg-ui-accent hover:text-ui-accent-foreground"
                     variant="outline"
                 >
                     <Upload className="mr-2 h-4 w-4" />
@@ -141,18 +142,21 @@ const RtoFolio = () => {
                 </Button>
 
                 {selectedFile && (
-                    <p className="text-sm text-green-600">
+                    <p className="text-sm text-ui-primary">
                         File selected: {selectedFile.name}
                     </p>
                 )}
                 
                 <div>
-                    <p>
+                    <p className="text-ui-muted-foreground">
                         {markdown ? markdown : "No markdown generated"}
                     </p>
                 </div>
 
-                <Button onClick={handleClick}>
+                <Button 
+                    onClick={handleClick}
+                    className="bg-ui-primary text-ui-primary-foreground hover:bg-ui-primary/90"
+                >
                     See Preview
                 </Button>
             </div>

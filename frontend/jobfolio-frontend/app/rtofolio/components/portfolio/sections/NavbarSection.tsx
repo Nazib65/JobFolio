@@ -1,8 +1,10 @@
 "use client"
 
 import { useState, useEffect } from "react";
+import { useDeviceSize } from "../DeviceSizeContext";
 
 const NavbarSection = ({ section }: { section: any }) => {
+    const contextDeviceSize = useDeviceSize();
     const layout = section?.layout || {};
     const desktopLayout = layout?.desktop || {};
     const mobileLayout = layout?.mobile || {};
@@ -14,6 +16,17 @@ const NavbarSection = ({ section }: { section: any }) => {
 
     // Effect to handle window resize
     useEffect(() => {
+        // If we have a context device size (from modal), use that
+        if (contextDeviceSize !== null) {
+            const shouldBeMobile = contextDeviceSize === "phone" || contextDeviceSize === "tablet";
+            setIsMobile(shouldBeMobile);
+            if (!shouldBeMobile) {
+                setIsOpen(false); // Close menu when in desktop mode
+            }
+            return; // Skip window listener when context is provided
+        }
+
+        // Otherwise, use window width detection
         const handleResize = () => {
             setIsMobile(window.innerWidth < 768);
             if (window.innerWidth >= 768) {
@@ -26,7 +39,7 @@ const NavbarSection = ({ section }: { section: any }) => {
 
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    }, [contextDeviceSize]);
 
     const ctaLabel = props.cta_label ?? props.ctaLabel ?? props.CTA;
     const ctaUrl = props.cta_url ?? props.ctaUrl;

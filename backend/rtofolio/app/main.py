@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from app.api.router import api_router
 from app.config import settings
+import certifi
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -12,7 +13,10 @@ async def lifespan(app: FastAPI):
 
 async def connect_to_mongo(app):
     from motor.motor_asyncio import AsyncIOMotorClient
-    app.mongo_client = AsyncIOMotorClient(settings.DATABASE_URL)
+    app.mongo_client = AsyncIOMotorClient(
+        settings.DATABASE_URL,
+        tlsCAFile=certifi.where(),
+    )
     print(settings.DATABASE_URL)
     app.mongodb = app.mongo_client.get_database(settings.DB_NAME)
     print(settings.DB_NAME)

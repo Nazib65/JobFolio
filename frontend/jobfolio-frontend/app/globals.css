@@ -44,6 +44,25 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+  
+  /* UI Color Palette - Simple 4 Color System */
+  --color-ui-background: #08090a;
+  --color-ui-foreground: #f7f8f8;
+  --color-ui-card: #08090a;
+  --color-ui-card-foreground: #f7f8f8;
+  --color-ui-primary: #5e6ad2;
+  --color-ui-primary-foreground: #f7f8f8;
+  --color-ui-secondary: #0f1011;
+  --color-ui-secondary-foreground: #f7f8f8;
+  --color-ui-muted: #13141a;
+  --color-ui-muted-foreground: #8a8f98;
+  --color-ui-accent: #5e6ad2;
+  --color-ui-accent-foreground: #f7f8f8;
+  --color-ui-border: #1f2028;
+  --color-ui-input: #1f2028;
+  --color-ui-ring: #5e6ad2;
+  --color-ui-destructive: hsl(0 84% 60%);
+  --color-ui-destructive-foreground: #f7f8f8;
 }
 
 :root {
@@ -161,5 +180,18 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
   }
 }

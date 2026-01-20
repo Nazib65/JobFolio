@@ -49,8 +49,8 @@ Your task is to carefully analyze the resume and fill in ALL the empty fields in
 3. For the navbar section: extract the person's name, create relevant navigation links
 4. For the hero section: create an engaging hero_text based on their professional summary, use their name, suggest a CTA
 5. For skills section: extract ALL technical skills, tools, and technologies from the resume. Add icons from https://devicon.dev/
-6. For experience section: extract work experience with role, company, dates, and create compelling descriptions
-7. For projects section: extract projects from the resume with title, description, and any links mentioned. Add images from https://images.unsplash.com/
+6. For experience section: extract work experience with role, company, dates, and create compelling descriptions. Do not add more than what is in the resume.
+7. For projects section: extract projects from the resume with title, description, and any links mentioned. Add images from https://images.unsplash.com/. Do not add more than what is in the resume.
 8. For footer section: use the person's name and create relevant social/contact links
 9. If there are more items in the template than data in the resume, fill in what you can and leave the rest empty
 10. If there is more data in the resume than template slots, prioritize the most important/recent items

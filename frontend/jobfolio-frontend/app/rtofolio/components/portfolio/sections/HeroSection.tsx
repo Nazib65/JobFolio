@@ -3,20 +3,30 @@
 import React, { useState, useEffect } from "react";
 // Assuming types are updated, otherwise use 'any' for now to prevent errors
 import { Hero } from "@/types/portfolio";
+import { useDeviceSize } from "../DeviceSizeContext";
 
 const HeroSection = ({ section }: { section: Hero | any }) => {
+  const contextDeviceSize = useDeviceSize();
   const { layout, props } = section;
   const [isMobile, setIsMobile] = useState(false);
 
   // 1. Handle Screen Resize
   useEffect(() => {
+    // If we have a context device size (from modal), use that
+    if (contextDeviceSize !== null) {
+      const shouldBeMobile = contextDeviceSize === "phone" || contextDeviceSize === "tablet";
+      setIsMobile(shouldBeMobile);
+      return; // Skip window listener when context is provided
+    }
+
+    // Otherwise, use window width detection
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
     handleResize(); // Initial check
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [contextDeviceSize]);
 
   // 2. Determine Active Configuration
   // We use desktop slots as the source of truth for CONTENT,

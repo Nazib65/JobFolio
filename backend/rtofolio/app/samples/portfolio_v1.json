@@ -12,6 +12,11 @@
     "flex_direction": "column",
     "align_items": "center"
   },
+  "profile": {
+    "role": "",
+    "industry": "",
+    "seniority": ""
+  },
   "sections": [
     {
       "type": "navbar",

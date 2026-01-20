@@ -1,16 +1,19 @@
 "use client"
 
-import { use } from "react"
+import { use, useState } from "react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import PortfolioRenderer from "../../components/portfolio/PortfolioRenderer"
 import { PortfolioSchema } from "@/types/portfolio"
 import ThemeApplier from "../../components/portfolio/ThemeApplier"
 import { normalizePortfolioSchema } from "../../components/portfolio/normalizePortfolioSchema"
 import SchemaEditor from "../../components/portfolio/SchemaEditor"
+import FullscreenPreviewModal from "../../components/portfolio/FullscreenPreviewModal"
+import { Maximize2 } from "lucide-react"
 
 const Preview = ({ params }: { params: Promise<{ protfolioID: string }> }) => {
     const resolvedParams = use(params)
     const queryClient = useQueryClient()
+    const [isFullscreenOpen, setIsFullscreenOpen] = useState(false)
 
     const fetchSchema = async () => {
         const response = await fetch(`/api/v1/portfolio/${resolvedParams.protfolioID}`)
@@ -68,7 +71,7 @@ const Preview = ({ params }: { params: Promise<{ protfolioID: string }> }) => {
     return(
         <div className="flex min-h-screen flex-col lg:flex-row">
             <ThemeApplier palette={portfolioSchema?.theme?.colorPalette} font={font} />
-            <aside className="w-full border-b border-border lg:h-screen lg:w-1/3 lg:max-w-[420px] lg:border-b-0 lg:border-r lg:overflow-y-auto">
+            <aside className="w-full border-b border-ui-border bg-ui-background lg:h-screen lg:w-1/3 lg:max-w-[420px] lg:border-b-0 lg:border-r lg:overflow-y-auto">
                 {portfolioSchema && (
                     <SchemaEditor
                         schema={portfolioSchema}
@@ -77,20 +80,41 @@ const Preview = ({ params }: { params: Promise<{ protfolioID: string }> }) => {
                     />
                 )}
                 {!portfolioSchema && isLoading && (
-                    <div className="p-4 text-sm text-muted-foreground">Loading editor...</div>
+                    <div className="p-4 text-sm text-ui-muted-foreground">Loading editor...</div>
                 )}
                 {error && (
-                    <div className="p-4 text-sm text-destructive">
+                    <div className="p-4 text-sm text-ui-destructive">
                         {(error as Error).message}
                     </div>
                 )}
             </aside>
-            <main className="flex-1 overflow-x-hidden">
+            <main className="relative flex-1 overflow-x-hidden">
+                {/* Fullscreen button */}
+                {portfolioSchema && (
+                    <button
+                        onClick={() => setIsFullscreenOpen(true)}
+                        className="fixed bottom-6 right-6 z-10 flex items-center gap-2 rounded-lg bg-ui-primary px-4 py-3 text-sm font-medium text-ui-primary-foreground shadow-lg transition-all hover:bg-ui-primary/90 hover:shadow-xl"
+                        title="Open Fullscreen Preview"
+                    >
+                        <Maximize2 size={18} />
+                        <span>Fullscreen Preview</span>
+                    </button>
+                )}
+                
                 {portfolioSchema && <PortfolioRenderer portfolioSchema={portfolioSchema} />}
                 {!portfolioSchema && isLoading && (
-                    <div className="p-6 text-sm text-muted-foreground">Loading preview...</div>
+                    <div className="p-6 text-sm text-ui-muted-foreground">Loading preview...</div>
                 )}
             </main>
+
+            {/* Fullscreen Preview Modal */}
+            {portfolioSchema && (
+                <FullscreenPreviewModal
+                    portfolioSchema={portfolioSchema}
+                    isOpen={isFullscreenOpen}
+                    onClose={() => setIsFullscreenOpen(false)}
+                />
+            )}
         </div>
     )
 }

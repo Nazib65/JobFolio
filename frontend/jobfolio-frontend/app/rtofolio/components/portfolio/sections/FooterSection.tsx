@@ -1,8 +1,10 @@
 "use client"
 
 import { useState, useEffect } from "react";
+import { useDeviceSize } from "../DeviceSizeContext";
 
 const FooterSection = ({ section }: { section: any }) => {
+    const contextDeviceSize = useDeviceSize();
     const layout = section?.layout || {};
     const props = section?.props || {};
     
@@ -10,13 +12,21 @@ const FooterSection = ({ section }: { section: any }) => {
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
+        // If we have a context device size (from modal), use that
+        if (contextDeviceSize !== null) {
+            const shouldBeMobile = contextDeviceSize === "phone" || contextDeviceSize === "tablet";
+            setIsMobile(shouldBeMobile);
+            return; // Skip window listener when context is provided
+        }
+
+        // Otherwise, use window width detection
         const handleResize = () => {
             setIsMobile(window.innerWidth < 768);
         };
         handleResize(); // Initial check
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    }, [contextDeviceSize]);
 
     // 2. Determine Active Column Count
     const desktopCols = layout?.columns?.desktop || 2;
