@@ -40,8 +40,15 @@ export type Theme = {
 export type PortfolioSchema = {
 
     schemaVersion? : string | null;
+    profile : Profile;
     theme : Theme;
     sections : [];
+};
+
+export type Profile = {
+    role: string;
+    industry?: string | null;
+    seniority?: string | null;
 };
 
 // General layout that covers both simple and responsive shapes

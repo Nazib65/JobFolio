@@ -61,9 +61,15 @@ class Section(BaseModel):
     # Updated key to snake_case
     item_layout: Optional[ItemLayout] = None
 
+class Profile(BaseModel):
+    role: str
+    industry: Optional[str] = None
+    seniority: Optional[str] = None
+
 class PortfolioSchema(BaseModel):
     # Updated key to snake_case
     schema_version: str
+    profile: Profile
     theme: Theme
     sections: List[Section]
 

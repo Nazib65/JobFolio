@@ -52,3 +52,25 @@ async def get_portfolio(portfolio_id: str, request: Request):
     validated_data = PortfolioSchema.model_validate(portfolio_data)
 
     return validated_data
+
+@router.patch("/{portfolio_id}", response_model=PortfolioSchema)
+async def update_portfolio(portfolio_id: str, portfolio: PortfolioSchema, request: Request):
+    db = request.app.mongodb
+    
+    if not ObjectId.is_valid(portfolio_id):
+        raise HTTPException(status_code=400, detail="Invalid portfolio ID format")
+    
+    portfolio_data = await db["portfolios"].find_one({"_id": ObjectId(portfolio_id)})
+    
+    if not portfolio_data:
+        raise HTTPException(status_code=404, detail="Portfolio with id '{}' was not found".format(portfolio_id))
+    
+    updated_data = portfolio.model_dump(by_alias=True)
+    updated_data.pop("_id", None)
+    
+    result = await db["portfolios"].update_one({"_id": ObjectId(portfolio_id)}, {"$set": updated_data})
+    
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Portfolio with id '{}' was not found".format(portfolio_id))
+    
+    return portfolio
