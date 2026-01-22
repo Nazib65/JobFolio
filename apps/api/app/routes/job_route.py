@@ -3,7 +3,7 @@ Job Ingestion routes
 """
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException, HTTPExcution, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -15,7 +15,7 @@ from app.services.text_cleaner import clean_and_parse_job
 router = APIRouter(prefix="/jobs", tags=["jobs"])
 
 # ==================
-# Request/ Response Models fro this endpoint 
+# Request/ Response Models for this endpoint 
 # ==================
 
 class JobCreateResponse(JobSummary):
