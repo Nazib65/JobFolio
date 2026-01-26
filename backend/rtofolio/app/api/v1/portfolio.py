@@ -25,12 +25,17 @@ def get_sample_portfolio():
     return portfolio.model_dump(by_alias=True)
 
 @router.post("/")
-async def create_portfolio(portfolio: PortfolioSchema, request: Request):
+async def create_portfolio(portfolio: PortfolioSchema, request: Request, user_id : str):
     db = request.app.mongodb
     # In a real app, you'd save this to MongoDB
     portfolio_dict = portfolio.model_dump(by_alias=True)
     
-    result = await db["portfolios"].insert_one(portfolio_dict)
+    portfolio_data = {
+        "user_id" : user_id,
+        **portfolio_dict
+    }
+
+    result = await db["portfolios"].insert_one(portfolio_data)
     
     return {
         "message": "Portfolio saved successfully",
