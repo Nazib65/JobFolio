@@ -8,6 +8,7 @@ import certifi
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await connect_to_mongo(app)
+    await connect_to_supabase(app)
     yield
     await disconnect_from_mongo(app)
 
@@ -17,14 +18,19 @@ async def connect_to_mongo(app):
         settings.DATABASE_URL,
         tlsCAFile=certifi.where(),
     )
-    print(settings.DATABASE_URL)
+    # print(settings.DATABASE_URL)
     app.mongodb = app.mongo_client.get_database(settings.DB_NAME)
-    print(settings.DB_NAME)
+    # print(settings.DB_NAME)
     print("Connected to MongoDB.")
 
 async def disconnect_from_mongo(app):
     app.mongo_client.close()
     print("MongoDB connection closed.")
+
+async def connect_to_supabase(app):
+    from supabase import create_client, Client
+    app.supabase = create_client(settings.SUPABASE_URL, settings.SUPABASE_ANON_KEY)
+    print("Connected to Supabase.")
 
 app = FastAPI(lifespan=lifespan)
 
