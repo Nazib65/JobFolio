@@ -18,7 +18,8 @@ export function normalizeTheme(theme: unknown): Theme {
     display: t.display ?? t.display,
     flexDirection: t.flexDirection ?? t.flex_direction,
     alignItems: t.alignItems ?? t.align_items,
-    colorPalette: t.colorPalette ?? t.color_palette,
+    colorPalette: Array.isArray(t.colorPalette) ? t.colorPalette : (Array.isArray(t.color_palette) ? t.color_palette : undefined),
+    color_palette: Array.isArray(t.color_palette) ? t.color_palette : (Array.isArray(t.colorPalette) ? t.colorPalette : undefined),
     font: normalizeFont(t.font) ?? t.font,
   };
 }

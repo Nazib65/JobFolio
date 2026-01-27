@@ -34,7 +34,7 @@ const FullscreenPreviewModal = ({
     return (
         <div className="fixed inset-0 z-50 bg-ui-background">
             {/* Header with controls */}
-            <div className="flex items-center justify-between border-b border-ui-border bg-ui-background px-4 py-3">
+            <div className="relative z-[60] flex items-center justify-between border-b border-ui-border bg-ui-background px-4 py-3">
                 <div className="flex items-center gap-2">
                     <h2 className="text-sm font-semibold text-ui-foreground">Preview</h2>
                     <span className="text-xs text-ui-muted-foreground">
@@ -85,7 +85,7 @@ const FullscreenPreviewModal = ({
                 {/* Close button */}
                 <button
                     onClick={onClose}
-                    className="rounded-md p-2 text-ui-foreground hover:bg-ui-secondary"
+                    className="relative z-[61] rounded-md p-2 text-ui-foreground hover:bg-ui-secondary"
                     title="Close Preview"
                 >
                     <X size={20} />

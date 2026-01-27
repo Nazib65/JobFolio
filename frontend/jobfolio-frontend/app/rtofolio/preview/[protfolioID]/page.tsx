@@ -6,7 +6,7 @@ import PortfolioRenderer from "../../components/portfolio/PortfolioRenderer"
 import { PortfolioSchema } from "@/types/portfolio"
 import ThemeApplier from "../../components/portfolio/ThemeApplier"
 import { normalizePortfolioSchema } from "../../components/portfolio/normalizePortfolioSchema"
-import SchemaEditor from "../../components/portfolio/SchemaEditor"
+import PortfolioLayout from "../../components/portfolio/PortfolioLayout"
 import FullscreenPreviewModal from "../../components/portfolio/FullscreenPreviewModal"
 import { Maximize2 } from "lucide-react"
 
@@ -31,21 +31,51 @@ const Preview = ({ params }: { params: Promise<{ protfolioID: string }> }) => {
     })
 
     const denormalizeTheme = (theme: any) => {
-        const t = theme ?? {}
+        if (!theme) return {}
+        const t = theme as Record<string, any>
+        
+        // Handle color_palette - convert string to array if needed
+        let colorPalette = t.colorPalette ?? t.color_palette
+        if (typeof colorPalette === 'string') {
+            // Split comma-separated string into array
+            colorPalette = colorPalette.split(',').map((c: string) => c.trim()).filter((c: string) => c.length > 0)
+        } else if (!Array.isArray(colorPalette)) {
+            colorPalette = null
+        }
+        
         return {
-            ...t,
-            color_palette: t.colorPalette ?? t.color_palette,
-            max_width: t.maxWidth ?? t.max_width,
-            flex_direction: t.flexDirection ?? t.flex_direction,
-            align_items: t.alignItems ?? t.align_items,
+            style: t.style,
+            color_palette: colorPalette,
+            font: t.font,
+            tone: t.tone,
+            max_width: t.maxWidth ?? t.max_width ?? "1280px",
+            width: t.width ?? "100%",
+            margin: t.margin ?? "0 auto",
+            display: t.display ?? "flex",
+            flex_direction: t.flexDirection ?? t.flex_direction ?? "column",
+            align_items: t.alignItems ?? t.align_items ?? "center",
         }
     }
 
-    const denormalizeSchema = (schema: PortfolioSchema) => ({
-        ...schema,
-        schema_version: (schema as any).schemaVersion ?? (schema as any).schema_version,
-        theme: denormalizeTheme((schema as any).theme),
-    })
+    const denormalizeSchema = (schema: PortfolioSchema) => {
+        const s = schema as any
+        // Ensure profile has required role field
+        const profile = s.profile || {}
+        if (!profile.role) {
+            profile.role = profile.role || "Developer" // Default value if missing
+        }
+        
+        return {
+            schema_version: s.schemaVersion ?? s.schema_version ?? "1.0",
+            profile: {
+                role: profile.role,
+                industry: profile.industry ?? null,
+                seniority: profile.seniority ?? null,
+            },
+            theme: denormalizeTheme(s.theme),
+            sections: s.sections ?? [],
+        }
+    }
 
     const updateMutation = useMutation({
         mutationFn: async (schema: PortfolioSchema) => {
@@ -57,7 +87,9 @@ const Preview = ({ params }: { params: Promise<{ protfolioID: string }> }) => {
                 body: JSON.stringify(denormalizeSchema(schema)),
             })
             if (!response.ok) {
-                throw new Error("Failed to update portfolio schema")
+                const errorData = await response.json().catch(() => ({ detail: "Unknown error" }))
+                console.error("Validation error details:", errorData)
+                throw new Error(`Failed to update portfolio schema: ${JSON.stringify(errorData.detail || errorData)}`)
             }
             return response.json()
         },
@@ -67,28 +99,18 @@ const Preview = ({ params }: { params: Promise<{ protfolioID: string }> }) => {
     })
 
 	const font = portfolioSchema?.theme?.font as "sans" | "mono" | undefined
+    const colorPalette = portfolioSchema?.theme?.colorPalette as string[] | undefined
 
     return(
-        <div className="flex min-h-screen flex-col lg:flex-row">
-            <ThemeApplier palette={portfolioSchema?.theme?.colorPalette} font={font} />
-            <aside className="w-full border-b border-ui-border bg-ui-background lg:h-screen lg:w-1/3 lg:max-w-[420px] lg:border-b-0 lg:border-r lg:overflow-y-auto">
-                {portfolioSchema && (
-                    <SchemaEditor
-                        schema={portfolioSchema}
-                        isSaving={updateMutation.isPending}
-                        onSave={(nextSchema) => updateMutation.mutate(nextSchema)}
-                    />
-                )}
-                {!portfolioSchema && isLoading && (
-                    <div className="p-4 text-sm text-ui-muted-foreground">Loading editor...</div>
-                )}
-                {error && (
-                    <div className="p-4 text-sm text-ui-destructive">
-                        {(error as Error).message}
-                    </div>
-                )}
-            </aside>
-            <main className="relative flex-1 overflow-x-hidden">
+        <>
+            <ThemeApplier palette={colorPalette?.join(",")} font={font} />
+            <PortfolioLayout
+                portfolioSchema={portfolioSchema ?? null}
+                isLoading={isLoading}
+                error={error as Error | null}
+                isSaving={updateMutation.isPending}
+                onSave={(nextSchema) => updateMutation.mutate(nextSchema)}
+            >
                 {/* Fullscreen button */}
                 {portfolioSchema && (
                     <button
@@ -100,12 +122,7 @@ const Preview = ({ params }: { params: Promise<{ protfolioID: string }> }) => {
                         <span>Fullscreen Preview</span>
                     </button>
                 )}
-                
-                {portfolioSchema && <PortfolioRenderer portfolioSchema={portfolioSchema} />}
-                {!portfolioSchema && isLoading && (
-                    <div className="p-6 text-sm text-ui-muted-foreground">Loading preview...</div>
-                )}
-            </main>
+            </PortfolioLayout>
 
             {/* Fullscreen Preview Modal */}
             {portfolioSchema && (
@@ -115,7 +132,7 @@ const Preview = ({ params }: { params: Promise<{ protfolioID: string }> }) => {
                     onClose={() => setIsFullscreenOpen(false)}
                 />
             )}
-        </div>
+        </>
     )
 }
 

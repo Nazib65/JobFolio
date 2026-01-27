@@ -7,10 +7,10 @@ from app.utils.auth_middleware import get_current_user
 
 router = APIRouter(prefix="/resume" , tags = ["resume"])
 
-@router.post("/")
-async def parse_resume(resume: UploadFile = File(...), user = Depends(get_current_user)):
-    if user is None:
-        raise HTTPException(status_code=401, detail="Unauthorized")
+@router.post("")
+async def parse_resume(resume: UploadFile = File(...)):
+    # if user is None:
+    #     raise HTTPException(status_code=401, detail="Unauthorized")
     
     if resume.content_type != "application/pdf":
         raise HTTPException(status_code=400, detail="Only PDF files are supported.")

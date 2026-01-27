@@ -6,7 +6,7 @@ router = APIRouter(prefix="/generation", tags=["generation"])
 
 class GenerationRequest(BaseModel):
     resume_markdown: str
-
-@router.post("/")
+    color_palette: list[str]  = None
+@router.post("")
 async def generate_portfolio(request: GenerationRequest):
-    return generate_portfolio_pipeline(request.resume_markdown)
+    return await generate_portfolio_pipeline(request.resume_markdown, request.color_palette)

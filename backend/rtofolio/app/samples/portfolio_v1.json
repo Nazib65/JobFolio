@@ -2,7 +2,7 @@
   "schema_version": "v1",
   "theme": {
     "style": "",
-    "color_palette": "",
+    "color_palette": [""],
     "font": "",
     "tone": "",
     "max_width": "1280px",

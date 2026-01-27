@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useDeviceSize } from "../DeviceSizeContext";
+import { Theme } from "@/types/portfolio";
 
-const FooterSection = ({ section }: { section: any }) => {
+const FooterSection = ({ section, theme }: { section: any; theme?: Theme }) => {
     const contextDeviceSize = useDeviceSize();
     const layout = section?.layout || {};
     const props = section?.props || {};
@@ -28,6 +29,12 @@ const FooterSection = ({ section }: { section: any }) => {
         return () => window.removeEventListener("resize", handleResize);
     }, [contextDeviceSize]);
 
+    // Get colors from theme
+    const colorPalette = theme?.color_palette ?? theme?.colorPalette ?? [];
+    const primaryColor = colorPalette[0] || "#1917fc";
+    const secondaryColor = colorPalette[1] || "#134331";
+    const accentColor = colorPalette[2] || "#ed2f25";
+
     // 2. Determine Active Column Count
     const desktopCols = layout?.columns?.desktop || 2;
     const mobileCols = layout?.columns?.mobile || 1;
@@ -42,7 +49,8 @@ const FooterSection = ({ section }: { section: any }) => {
         marginTop: "auto",
         width: "100%",
         // Optional: Center text on mobile for better aesthetics
-        textAlign: isMobile ? "center" : "left"
+        textAlign: isMobile ? "center" : "left",
+        borderTop: `1px solid ${secondaryColor || "#e5e7eb"}`,
     };
 
     const slots = layout?.slots || {};
@@ -55,7 +63,12 @@ const FooterSection = ({ section }: { section: any }) => {
                 ) : null;
             case "name":
                 return props.name ? (
-                    <span className="font-semibold">{props.name}</span>
+                    <span 
+                        className="font-semibold"
+                        style={{ color: primaryColor }}
+                    >
+                        {props.name}
+                    </span>
                 ) : null;
             case "links":
                 return (props.links || []).length ? (
@@ -87,7 +100,7 @@ const FooterSection = ({ section }: { section: any }) => {
     };
 
     return (
-        <footer className="w-full border-t border-border bg-background text-foreground" style={footerStyle}>
+        <footer id="footer" className="w-full border-t border-border bg-background text-foreground" style={footerStyle}>
             {/* Left Slot */}
             <div
                 className="flex flex-col gap-2"
