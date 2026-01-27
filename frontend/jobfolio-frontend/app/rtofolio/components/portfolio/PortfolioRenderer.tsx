@@ -35,7 +35,8 @@ const PortfolioRenderer = ({ portfolioSchema }: { portfolioSchema: PortfolioSche
                 alignItems: theme?.alignItems ?? "center", 
                 
                 // Optional: Ensure it fills height
-                minHeight: "100vh" 
+                minHeight: "100vh",
+                
             }}>
                 
                 {sections.map((section: any, idx: number) => {
@@ -43,17 +44,17 @@ const PortfolioRenderer = ({ portfolioSchema }: { portfolioSchema: PortfolioSche
 
                     switch (section?.type) {
                         case "navbar":
-                            return <NavbarSection key={key} section={section}/>
+                            return <NavbarSection key={key} section={section} theme={theme}/>
                         case "hero":
-                            return <HeroSection key={key} section={section} />
+                            return <HeroSection key={key} section={section} theme={theme} />
                         case "skills":
-                            return <SkillsSection key={key} section={section} />
+                            return <SkillsSection key={key} section={section} theme={theme} />
                         case "experience":
-                            return <ExperienceSection key={key} section={section}/>
+                            return <ExperienceSection key={key} section={section} theme={theme}/>
                         case "projects":
-                            return <ProjectsSection key={key} section={section} />
+                            return <ProjectsSection key={key} section={section} theme={theme} />
                         case "footer":
-                            return <FooterSection key={key} section={section}/>
+                            return <FooterSection key={key} section={section} theme={theme}/>
                         default:
                             return null
                     }

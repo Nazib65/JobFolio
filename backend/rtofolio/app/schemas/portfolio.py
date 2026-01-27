@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 class Theme(BaseModel):
     style: Optional[str] = None
-    color_palette: Optional[str] = None
+    color_palette: Optional[List[str]] = None
     font: Optional[str] = None
     tone: Optional[str] = None
     # Updated keys to snake_case

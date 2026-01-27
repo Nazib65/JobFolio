@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useDeviceSize } from "../DeviceSizeContext";
+import { Theme } from "@/types/portfolio";
 
-const NavbarSection = ({ section }: { section: any }) => {
+const NavbarSection = ({ section, theme }: { section: any; theme?: Theme }) => {
     const contextDeviceSize = useDeviceSize();
     const layout = section?.layout || {};
     const desktopLayout = layout?.desktop || {};
@@ -44,6 +45,12 @@ const NavbarSection = ({ section }: { section: any }) => {
     const ctaLabel = props.cta_label ?? props.ctaLabel ?? props.CTA;
     const ctaUrl = props.cta_url ?? props.ctaUrl;
 
+    // Get colors from theme
+    const colorPalette = theme?.color_palette ?? theme?.colorPalette ?? [];
+    const primaryColor = colorPalette[0] || "#1917fc";
+    const secondaryColor = colorPalette[1] || "#134331";
+    const accentColor = colorPalette[2] || "#ed2f25";
+
     const activeLayout = isMobile ? mobileLayout : desktopLayout;
     const slots = desktopLayout?.slots || {};
 
@@ -58,7 +65,7 @@ const NavbarSection = ({ section }: { section: any }) => {
         alignItems,
         gap,
         width: activeLayout?.width ?? "100%",
-        maxWidth: maxWidth ?? undefined,
+        maxWidth: maxWidth ?? "1280px",
         margin: activeLayout?.margin ?? "0 auto",
         padding: "1rem 2rem",
     };
@@ -71,7 +78,12 @@ const NavbarSection = ({ section }: { section: any }) => {
                 ) : null;
             case "name":
                 return props.name ? (
-                    <span className="text-lg font-semibold">{props.name}</span>
+                    <span 
+                        className="text-lg font-semibold"
+                        style={{ color: primaryColor }}
+                    >
+                        {props.name}
+                    </span>
                 ) : null;
             case "links":
                 return (props.links || []).length ? (
@@ -80,7 +92,16 @@ const NavbarSection = ({ section }: { section: any }) => {
                             <a
                                 key={idx}
                                 href={link.url || "#"}
-                                className="text-sm text-foreground/80 hover:text-foreground"
+                                className="text-sm transition-colors"
+                                style={{
+                                    color: primaryColor,
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.color = accentColor;
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.color = primaryColor;
+                                }}
                             >
                                 {link.label || "Link"}
                             </a>
@@ -91,12 +112,18 @@ const NavbarSection = ({ section }: { section: any }) => {
                 return ctaLabel ? (
                     ctaUrl ? (
                         <a href={ctaUrl} target="_blank" rel="noreferrer">
-                            <button className="rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground">
+                            <button 
+                                className="rounded-md px-4 py-2 text-sm text-white"
+                                style={{ backgroundColor: primaryColor }}
+                            >
                                 {ctaLabel}
                             </button>
                         </a>
                     ) : (
-                        <button className="rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground">
+                        <button 
+                            className="rounded-md px-4 py-2 text-sm text-white"
+                            style={{ backgroundColor: primaryColor }}
+                        >
                             {ctaLabel}
                         </button>
                     )
@@ -118,8 +145,11 @@ const NavbarSection = ({ section }: { section: any }) => {
 
     return (
         <nav
-            className="relative z-50 w-full border-b border-border bg-background text-foreground"
-            style={navStyle}
+            className="relative z-50 w-full bg-background text-foreground"
+            style={{
+                ...navStyle,
+                borderBottom: `1px solid ${secondaryColor || "#e5e7eb"}`,
+            }}
         >
             {/* Left slots */}
             <div className="flex items-center gap-4">
@@ -137,7 +167,8 @@ const NavbarSection = ({ section }: { section: any }) => {
             {isMobile && (
                 <button 
                     onClick={() => setIsOpen(!isOpen)}
-                    className="absolute right-4 top-4 z-51 rounded-md p-2 text-foreground hover:bg-muted"
+                    className="z-[55] ml-auto rounded-md p-2 text-foreground hover:bg-muted"
+                    style={{ color: primaryColor }}
                 >
                     {/* Simple SVG Icon for Menu / Close */}
                     {isOpen ? (
@@ -157,7 +188,12 @@ const NavbarSection = ({ section }: { section: any }) => {
 
             {/* Mobile Dropdown Menu */}
             {isMobile && isOpen && (
-                <div className="absolute left-0 top-full w-full border-b border-border bg-background px-8 py-4 shadow">
+                <div 
+                    className="absolute left-0 top-full w-full bg-background px-8 py-4 shadow"
+                    style={{
+                        borderBottom: `1px solid ${secondaryColor || "#e5e7eb"}`,
+                    }}
+                >
                     {renderSlotGroup(slots?.right)}
                 </div>
             )}

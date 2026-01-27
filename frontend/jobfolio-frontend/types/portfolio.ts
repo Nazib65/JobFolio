@@ -32,7 +32,8 @@ export type Theme = {
     display?: string;
     flexDirection?: string | null;
     alignItems?: string;
-    colorPalette?: string;
+    colorPalette?: string[];
+    color_palette?: string[];
     font?: string | null;
 }
 

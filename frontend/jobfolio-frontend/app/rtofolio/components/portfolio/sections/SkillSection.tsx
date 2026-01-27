@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useDeviceSize } from "../DeviceSizeContext";
+import { Theme } from "@/types/portfolio";
 
-const SkillsSection = ({ section }: { section: any }) => {
+const SkillsSection = ({ section, theme }: { section: any; theme?: Theme }) => {
     const contextDeviceSize = useDeviceSize();
     const layout = section?.layout || {};
     const items = section?.items || [];
@@ -28,6 +29,12 @@ const SkillsSection = ({ section }: { section: any }) => {
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, [contextDeviceSize]);
+
+    // Get colors from theme
+    const colorPalette = theme?.color_palette ?? theme?.colorPalette ?? [];
+    const primaryColor = colorPalette[0] || "#1917fc";
+    const secondaryColor = colorPalette[1] || "#134331";
+    const accentColor = colorPalette[2] || "#ed2f25";
 
     const containerStyle: React.CSSProperties = {
         display: "flex",
@@ -54,9 +61,11 @@ const SkillsSection = ({ section }: { section: any }) => {
         alignItems: "center",
         gap: "0.5rem",
         padding: "1rem",
-        border: "1px solid #e5e7eb",
+        border: `2px solid ${secondaryColor || "#e5e7eb"}`,
         borderRadius: "8px",
-        minWidth: "120px", 
+        minWidth: "120px",
+        transition: "all 0.3s ease",
+        cursor: "pointer",
         
         // 4. Apply the calculated width
         flexBasis: cardWidth,
@@ -66,18 +75,42 @@ const SkillsSection = ({ section }: { section: any }) => {
     };
 
     return (
-        <section style={{ width: "100%", padding: "0 1rem" }}>
-            <h2 style={{ textAlign: "center", marginBottom: "1rem" }} className="text-4xl font-bold text-foreground mb-4 leading-tight mt-4">Skills</h2>
+        <section style={{ width: "100%", padding: "0 1rem" }} id="skills">
+            <h2 style={{ textAlign: "center", marginBottom: "1rem", color: primaryColor }} className="text-4xl font-bold mb-4 leading-tight mt-4">Skills</h2>
             <div style={containerStyle}>
-                {items.length > 0 ? items.map((skill: any, idx: number) => (
-                    <div key={idx} style={cardStyle}>
-                        {skill.icon && (
-                            <img src={skill.icon} alt={skill.name} style={{ width: "40px", height: "40px" }} />
-                        )}
-                        <span className="text-foreground text-lg leading-relaxed mb-4">{skill.name || "Skill Name"}</span>
-                    </div>
-                )) : (
-                    <p style={{color: "#666"}} className="text-muted-foreground text-lg leading-relaxed mb-4">No skills listed yet.</p>
+                {items.length > 0 ? items.map((skill: any, idx: number) => {
+                    // Cycle through colors for visual variety
+                    const cardColor = idx % 3 === 0 ? primaryColor : idx % 3 === 1 ? secondaryColor : accentColor;
+                    return (
+                        <div 
+                            key={idx} 
+                            style={{
+                                ...cardStyle,
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.borderColor = accentColor;
+                                e.currentTarget.style.transform = "translateY(-4px)";
+                                e.currentTarget.style.boxShadow = `0 4px 12px ${accentColor}40`;
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.borderColor = secondaryColor;
+                                e.currentTarget.style.transform = "translateY(0)";
+                                e.currentTarget.style.boxShadow = "none";
+                            }}
+                        >
+                            {skill.icon && (
+                                <img src={skill.icon} alt={skill.name} style={{ width: "40px", height: "40px" }} />
+                            )}
+                            <span 
+                                className="text-lg leading-relaxed mb-4 font-medium"
+                                style={{ color: cardColor }}
+                            >
+                                {skill.name || "Skill Name"}
+                            </span>
+                        </div>
+                    );
+                }) : (
+                    <p style={{color: secondaryColor || "#666"}} className="text-muted-foreground text-lg leading-relaxed mb-4">No skills listed yet.</p>
                 )}
             </div>
         </section>

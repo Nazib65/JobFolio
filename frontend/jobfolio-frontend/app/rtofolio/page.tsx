@@ -4,6 +4,7 @@ import React, { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Upload } from "lucide-react"
+import ColorPalette from "./components/portfolio/ColorPalette"
 
 const RtoFolio = () => {
     const [loading, setLoading] = useState(false)
@@ -12,6 +13,7 @@ const RtoFolio = () => {
     const [markdown, setMarkdown] = useState<string | null>(null)
     const fileInputRef = useRef<HTMLInputElement>(null)
     const router = useRouter()
+    const [colors, setColors] = useState<string[]>([])
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0]
@@ -47,7 +49,7 @@ const RtoFolio = () => {
             const formData = new FormData()
             formData.append("resume", selectedFile)
 
-            const response = await fetch(`/api/v1/resume/`, {
+            const response = await fetch(`/api/v1/resume`, {
                 method: "POST",
                 body: formData,
             })
@@ -60,15 +62,23 @@ const RtoFolio = () => {
             console.log("Resume parsed:", data)
             setMarkdown(data.markdown)
 
-            const generationResponse = await fetch(`/api/v1/generation/`, {
+            // Create an AbortController with a long timeout for the generation request
+            const controller = new AbortController()
+            const timeoutId = setTimeout(() => controller.abort(), 120000) // 2 minutes timeout
+            
+            const generationResponse = await fetch(`/api/v1/generation`, {
                 method: "POST",
+                signal: controller.signal,
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                     resume_markdown: data.markdown,
+                    color_palette: colors.length > 0 ? colors : undefined,
                 }),
             })
+            
+            clearTimeout(timeoutId)
 
             if (!generationResponse.ok) {
                 throw new Error(`Generation failed: ${generationResponse.statusText}`)
@@ -77,7 +87,7 @@ const RtoFolio = () => {
             const portfolioData = await generationResponse.json()
             console.log("Portfolio generated:", portfolioData)
 
-            const uploadResponse = await fetch(`/api/v1/portfolio/`, {
+            const uploadResponse = await fetch(`/api/v1/portfolio?user_id=${"6976c18ea9f62b07169a1b31"}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -148,9 +158,7 @@ const RtoFolio = () => {
                 )}
                 
                 <div>
-                    <p className="text-ui-muted-foreground">
-                        {markdown ? markdown : "No markdown generated"}
-                    </p>
+                    <ColorPalette onColorsChange={setColors}/>
                 </div>
 
                 <Button 

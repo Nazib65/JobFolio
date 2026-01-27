@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 // Assuming types are updated, otherwise use 'any' for now to prevent errors
-import { Hero } from "@/types/portfolio";
+import { Hero, Theme } from "@/types/portfolio";
 import { useDeviceSize } from "../DeviceSizeContext";
 
-const HeroSection = ({ section }: { section: Hero | any }) => {
+const HeroSection = ({ section, theme }: { section: Hero | any; theme?: Theme }) => {
   const contextDeviceSize = useDeviceSize();
   const { layout, props } = section;
   const [isMobile, setIsMobile] = useState(false);
@@ -56,6 +56,12 @@ const HeroSection = ({ section }: { section: Hero | any }) => {
   const leftSlot = contentSlots["left"];
   const rightSlot = contentSlots["right"];
 
+  // Get colors from theme
+  const colorPalette = theme?.color_palette ?? theme?.colorPalette ?? [];
+  const primaryColor = colorPalette[0] || "#1917fc";
+  const secondaryColor = colorPalette[1] || "#134331";
+  const accentColor = colorPalette[2] || "#ed2f25";
+
   // 4. Render Items (Updated for new JSON keys)
   const renderSlotItem = (slotName: string) => {
     // Fallback to empty object to prevent crashes
@@ -67,7 +73,12 @@ const HeroSection = ({ section }: { section: Hero | any }) => {
         return (
           <div>
             {p.name && (
-              <h1 className={isMobile ? "text-4xl" : "text-5xl"}>{p.name}</h1>
+              <h1 
+                className={isMobile ? "text-4xl" : "text-5xl"}
+                style={{ color: primaryColor }}
+              >
+                {p.name}
+              </h1>
             )}
             {p.hero_text && (
               <p className="mt-2 text-muted-foreground leading-relaxed">
@@ -84,7 +95,14 @@ const HeroSection = ({ section }: { section: Hero | any }) => {
             rel="noreferrer"
             className="inline-block mt-5"
           >
-            <button className="px-6 py-3 rounded-lg bg-primary text-primary-foreground">
+            <button 
+              className="px-6 py-3 rounded-lg text-white transition-all hover:opacity-90"
+              style={{ 
+                backgroundColor: primaryColor,
+                border: `2px solid ${accentColor}`,
+                boxShadow: `0 4px 12px ${accentColor}40`
+              }}
+            >
               {p.cta_label}
             </button>
           </a>
@@ -143,10 +161,12 @@ const HeroSection = ({ section }: { section: Hero | any }) => {
 
   return (
     <section
+      id="hero"
       style={{
         width: "100%",
         maxWidth: "1280px",
-        margin: "2rem auto",
+        margin: "2rem 0 2rem 0",
+        padding: "0 1rem",
       }}
       className="bg-background text-foreground"
     >
@@ -169,7 +189,8 @@ const HeroSection = ({ section }: { section: Hero | any }) => {
 
         {/* Right Column/Row */}
         <div
-          style={{ width: "100%", display: "flex", justifyContent: "center" }}
+          style={{ display: "flex", justifyContent: "flex-end" }}
+          className="w-full"
         >
           {renderSlotContent(rightSlot)}
         </div>

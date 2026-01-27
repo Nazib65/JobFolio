@@ -70,12 +70,16 @@ async def update_portfolio(portfolio_id: str, portfolio: PortfolioSchema, reques
     if not portfolio_data:
         raise HTTPException(status_code=404, detail="Portfolio with id '{}' was not found".format(portfolio_id))
     
-    updated_data = portfolio.model_dump(by_alias=True)
+    # Use exclude_unset=True to only include fields that were actually provided
+    updated_data = portfolio.model_dump(by_alias=True, exclude_unset=True)
     updated_data.pop("_id", None)
+    updated_data.pop("user_id", None)  # Don't allow updating user_id
     
     result = await db["portfolios"].update_one({"_id": ObjectId(portfolio_id)}, {"$set": updated_data})
     
     if result.modified_count == 0:
         raise HTTPException(status_code=404, detail="Portfolio with id '{}' was not found".format(portfolio_id))
     
-    return portfolio
+    # Return the updated portfolio
+    updated_portfolio_data = await db["portfolios"].find_one({"_id": ObjectId(portfolio_id)})
+    return PortfolioSchema.model_validate(updated_portfolio_data)

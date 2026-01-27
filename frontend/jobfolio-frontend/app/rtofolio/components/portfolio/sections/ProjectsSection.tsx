@@ -1,10 +1,16 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { Projects } from "@/types/portfolio";
+import { Projects, Theme } from "@/types/portfolio";
 
-const ProjectsSection = ({ section }: { section: Projects }) => {
+const ProjectsSection = ({ section, theme }: { section: Projects; theme?: Theme }) => {
   const { layout, itemLayout, items } = section;
+
+  // Get colors from theme
+  const colorPalette = theme?.color_palette ?? theme?.colorPalette ?? [];
+  const primaryColor = colorPalette[0] || "#1917fc";
+  const secondaryColor = colorPalette[1] || "#134331";
+  const accentColor = colorPalette[2] || "#ed2f25";
 
   // Keep section alignment consistent with other sections (Experience/Skills)
   const outerSectionStyle: CSSProperties = {
@@ -26,9 +32,11 @@ const ProjectsSection = ({ section }: { section: Projects }) => {
   const cardStyle = {
     maxWidth: itemLayout?.constraints?.maxWidth,
     width: "32rem",
-    border: "1px solid #e5e7eb",
+    border: `2px solid ${secondaryColor || "#e5e7eb"}`,
     borderRadius: "12px",
     padding: "16px",
+    transition: "all 0.3s ease",
+    cursor: "pointer",
   } as CSSProperties;
 
   const cardInnerStyle = {
@@ -38,11 +46,24 @@ const ProjectsSection = ({ section }: { section: Projects }) => {
   } as CSSProperties;
 
   return (
-    <section style={outerSectionStyle}>
-      <h2 style={{ margin: 0 }} className="text-foreground font-bold text-2xl mt-4 mb-4 text-center py-4 leading-tight">Projects</h2>
+    <section style={outerSectionStyle} id="projects">
+      <h2 style={{ margin: 0, color: primaryColor }} className="font-bold text-2xl mt-4 mb-4 text-center py-4 leading-tight">Projects</h2>
       <div style={containerStyle}>
         {(items || []).map((project: any, idx: number) => (
-          <div key={project.id || idx} style={cardStyle}>
+          <div 
+            key={project.id || idx} 
+            style={cardStyle}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = accentColor;
+              e.currentTarget.style.transform = "translateY(-4px)";
+              e.currentTarget.style.boxShadow = `0 8px 24px ${accentColor}30`;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = secondaryColor;
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "none";
+            }}
+          >
             <div style={cardInnerStyle}>
               {/* slot: image */}
               {project.image ? (
@@ -56,8 +77,8 @@ const ProjectsSection = ({ section }: { section: Projects }) => {
               {/* slot: title */}
               {project.title ? (
                 <h3
-                  style={{ margin: 0 }}
-                  className="text-foreground font-bold text-2xl mt-4 mb-2 leading-tight"
+                  style={{ margin: 0, color: primaryColor }}
+                  className="font-bold text-2xl mt-4 mb-2 leading-tight"
                 >
                   {project.title}
                 </h3>
@@ -83,12 +104,18 @@ const ProjectsSection = ({ section }: { section: Projects }) => {
                     display: "inline-block",
                     marginTop: "4px",
                     textDecoration: "none",
-                    border: "1px solid #e5e7eb",
+                    border: `2px solid ${accentColor}`,
                     borderRadius: "10px",
                     padding: "10px 12px",
                   }}
                 >
-                  <button className="w-full cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive">
+                  <button 
+                    className="w-full cursor-pointer text-white hover:opacity-90 px-4 py-2 rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 outline-none"
+                    style={{ 
+                      backgroundColor: primaryColor,
+                      boxShadow: `0 2px 8px ${accentColor}40`
+                    }}
+                  >
                     Live Link
                   </button>
                 </a>
