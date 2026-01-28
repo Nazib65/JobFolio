@@ -9,6 +9,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 CLAUDE_API_KEY = os.getenv("CLAUDE_API_KEY")
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 # Debug print to verify it works (remove this later)
 # print(f"Loaded DATABASE_URL: {DATABASE_URL}")
