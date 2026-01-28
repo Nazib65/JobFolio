@@ -14,10 +14,9 @@ from app.services.text_cleaner import clean_and_parse_job
 
 router = APIRouter(prefix="/jobs", tags=["jobs"])
 
-
-# ===================
-# Request/Response Models for this endpoint
-# ===================
+# ==================
+# Request/ Response Models fro this endpoint 
+# ==================
 
 class JobCreateResponse(JobSummary):
     """Response after creating a job."""
@@ -222,116 +221,24 @@ async def import_job_from_url(
     """
     Import a job from a URL.
     
-    Behavior:
-    1. If `raw_text` is provided: Use it directly (user pasted content)
-    2. If `raw_text` is missing: Attempt to fetch and parse the URL
-    3. If fetch fails (JS-only, blocked): Return helpful fallback message
+    Note: This is a placeholder endpoint. Full URL scraping requires:
+    - JavaScript rendering (Playwright/Selenium)
+    - ATS-specific parsers (Greenhouse, Lever, Workday)
+    - Rate limiting and caching
     
-    Supported platforms for direct fetch:
-    - Greenhouse (boards.greenhouse.io)
-    - Lever (jobs.lever.co)
-    - Ashby (jobs.ashbyhq.com)
-    - Generic HTML job pages
-    
-    JS-required platforms (will return fallback):
-    - LinkedIn
-    - Indeed
-    - Glassdoor
-    - Workday
+    For v1, this endpoint requires raw_text to be provided along with the URL.
+    The URL is stored for reference.
     """
-    from app.services.url_ingest import url_ingest_service
-    
-    fetch_method = "provided"
-    detected_platform = None
-    raw_text = request.raw_text
-    
-    # If no raw_text provided, attempt to fetch
-    if not raw_text:
-        result = await url_ingest_service.ingest_url(request.url)
-        detected_platform = result.detected_platform
-        
-        if result.success:
-            raw_text = result.raw_text
-            fetch_method = "fetched"
-        else:
-            # Return error with fallback message
-            raise HTTPException(
-                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-                detail={
-                    "error": result.error_message or "Could not fetch job description",
-                    "fallback_message": result.fallback_message,
-                    "requires_js": result.requires_js,
-                    "is_blocked": result.is_blocked,
-                    "detected_platform": result.detected_platform,
-                    "hint": "Please provide the job description text in the 'raw_text' field",
-                },
-            )
-    else:
-        fetch_method = "provided"
-    
-    # Now we have raw_text - create the job
-    parsed = clean_and_parse_job(raw_text, request.title)
-    
-    # Determine title (user provided > extracted > fallback)
-    title = request.title or parsed["metadata"]["title"] or "Untitled Position"
-    
-    # Map seniority string to enum
-    seniority = None
-    if parsed["metadata"]["seniority"]:
-        try:
-            seniority = SeniorityLevel(parsed["metadata"]["seniority"])
-        except ValueError:
-            pass
-    
-    # Map role type string to enum
-    role_type = None
-    if parsed["metadata"]["role_type"]:
-        try:
-            role_type = RoleType(parsed["metadata"]["role_type"])
-        except ValueError:
-            pass
-    
-    # Create job record
-    job = Job(
-        title=title,
-        company=request.company or parsed["metadata"]["company"],
-        location=request.location or parsed["metadata"]["location"],
-        raw_text=raw_text,
-        cleaned_text=parsed["cleaned_text"],
-        source=JobSource.URL,
-        source_url=request.url,
-        seniority=seniority,
-        role_type=role_type,
-        remote_type=parsed["metadata"]["remote_type"],
-        salary_min=parsed["metadata"]["salary_min"],
-        salary_max=parsed["metadata"]["salary_max"],
-        salary_currency=parsed["metadata"]["salary_currency"],
-        requirements_section=parsed["sections"]["requirements"],
-        nice_to_have_section=parsed["sections"]["nice_to_have"],
-        responsibilities_section=parsed["sections"]["responsibilities"],
-        benefits_section=parsed["sections"]["benefits"],
-        is_processed=False,
+    if not request.raw_text:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="URL import not yet implemented. Please provide raw_text with the URL."
+        )
+    job_create = JobCreate(
+        raw_text=request.raw_text,
+        title=request.title,
+        company=request.company,
+        location=request.location,
+        source_url=request.url
     )
-    
-    db.add(job)
-    await db.flush()
-    await db.refresh(job)
-    
-    # Return with extra metadata
-    return {
-        "id": job.id,
-        "title": job.title,
-        "company": job.company,
-        "location": job.location,
-        "remote_type": job.remote_type,
-        "seniority": job.seniority.value if job.seniority else None,
-        "role_type": job.role_type.value if job.role_type else None,
-        "source": job.source.value,
-        "source_url": job.source_url,
-        "is_processed": job.is_processed,
-        "summary": job.summary,
-        "created_at": job.created_at,
-        "updated_at": job.updated_at,
-        "fetch_method": fetch_method,
-        "detected_platform": detected_platform,
-    }
+    return await create_job(job_create, db)
