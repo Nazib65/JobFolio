@@ -81,13 +81,7 @@ async def import_github_repos(
 ) -> dict:
     """
     Import GitHub repositories from URLs.
-    
-    - Validates GitHub URLs
-    - Fetches repo metadata, languages, README via GitHub API
-    - Stores projects in database
-    - Skips already imported repos (by github_repo_id)
-    
-    Note: Uses unauthenticated API (60 req/hour). Set GITHUB_API_TOKEN for higher limits.
+    Skips already imported repositories for the user.
     """
     results=[]
     successful=0
