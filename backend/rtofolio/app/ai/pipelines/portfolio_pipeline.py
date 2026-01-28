@@ -3,32 +3,38 @@ import os
 import asyncio
 from anthropic import Anthropic
 from app.schemas.portfolio import PortfolioSchema
-from app.env import CLAUDE_API_KEY
+from app.env import CLAUDE_API_KEY, GEMINI_API_KEY
+from google import genai
+import time
 
 model = "claude-sonnet-4-5-20250929"
+
 
 def load_portfolio_template():
     """Load the portfolio template JSON from samples directory"""
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    template_path = os.path.join(current_dir, '..', '..', 'samples', 'portfolio_v1.json')
-    
-    with open(template_path, 'r') as f:
+    template_path = os.path.join(
+        current_dir, "..", "..", "samples", "portfolio_v1.json"
+    )
+
+    with open(template_path, "r") as f:
         return json.load(f)
+
 
 async def generate_portfolio_pipeline(resume_markdown: str, color_palette: list[str]):
     """
     Generate a filled portfolio JSON from resume markdown.
-    
+
     Args:
         resume_markdown: The resume content in markdown format
-        
+
     Returns:
         dict: A filled portfolio JSON based on the template
     """
     try:
         # Load the portfolio template
         portfolio_template = load_portfolio_template()
-        
+
         # Create the prompt for Claude
         prompt = f"""You are an expert portfolio generator. I will provide you with a resume in markdown format and a JSON template for a portfolio website.
 
@@ -64,15 +70,13 @@ Return the complete filled JSON now:"""
 
         # Call Claude API in a thread pool to avoid blocking the event loop
         def call_claude():
-            client = Anthropic(api_key=CLAUDE_API_KEY)
-            return client.messages.create(
-                model=model,
-                max_tokens=8000,
-                messages=[
-                    {"role": "user", "content": prompt}
-                ]
+            client = genai.Client(api_key=GEMINI_API_KEY)
+            return client.models.generate_content(
+                model="gemini-3-flash-preview",
+                contents=prompt,
             )
-        
+
+        start_time = time.perf_counter()
         # Use to_thread if available (Python 3.9+), otherwise use run_in_executor
         try:
             response = await asyncio.to_thread(call_claude)
@@ -80,10 +84,10 @@ Return the complete filled JSON now:"""
             # Fallback for Python < 3.9
             loop = asyncio.get_event_loop()
             response = await loop.run_in_executor(None, call_claude)
-        
+
         # Extract the response text
-        response_text = response.content[0].text
-        
+        response_text = response.text
+
         # Parse the JSON from the response
         # Claude might wrap it in markdown code blocks, so we need to extract it
         if "```json" in response_text:
@@ -96,10 +100,13 @@ Return the complete filled JSON now:"""
             json_str = response_text[start:end].strip()
         else:
             json_str = response_text.strip()
-        
+
         # Parse and return the JSON
         filled_portfolio = json.loads(json_str)
+        end_time = time.perf_counter()
+        print(f"Gemini API call took {end_time - start_time} seconds")
         return filled_portfolio
+
         
     except json.JSONDecodeError as e:
         raise ValueError(f"Failed to parse JSON response from Claude: {str(e)}")

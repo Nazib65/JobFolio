@@ -92,62 +92,6 @@
         {
           "name": "",
           "icon": ""
-        },
-        {
-          "name": "",
-          "icon": ""
-        },
-        {
-          "name": "",
-          "icon": ""
-        },
-        {
-          "name": "",
-          "icon": ""
-        },
-        {
-          "name": "",
-          "icon": ""
-        },
-        {
-          "name": "",
-          "icon": ""
-        },
-        {
-          "name": "",
-          "icon": ""
-        },
-        {
-          "name": "",
-          "icon": ""
-        },
-        {
-          "name": "",
-          "icon": ""
-        },
-        {
-          "name": "",
-          "icon": ""
-        },
-        {
-            "name": "",
-          "icon": ""
-        },
-        {
-          "name": "",
-          "icon": ""
-        },
-        {
-          "name": "",
-          "icon": ""
-        },
-        {
-          "name": "",
-          "icon": ""
-        },
-        {
-          "name": "",
-          "icon": ""
         }
       ],
       "item_layout": {
@@ -177,42 +121,6 @@
           "company": "",
           "date": "",
           "description": ""
-        },
-        {
-          "role": "",
-          "company": "",
-          "date": "",
-          "description": ""
-        },
-        {
-          "role": "",
-          "company": "",
-          "date": "",
-          "description": ""
-        },
-        {
-            "role": "",
-          "company": "",
-          "date": "",
-          "description": ""
-        },
-        {
-          "role": "",
-          "company": "",
-          "date": "",
-          "description": ""
-        },
-        {
-          "role": "",
-          "company": "",
-          "date": "",
-          "description": ""
-        },
-        {
-          "role": "",
-          "company": "",
-          "date": "",
-          "description": ""
         }
       ],
       "item_layout": null
@@ -235,21 +143,7 @@
       "props": null,
       "items": [
         {
-          "id": "1",
-            "title": "",
-          "description": "",
-          "image": "",
-            "link_url": ""
-        },
-        {
-          "id": "2",
-          "title": "",
-          "description": "",
-          "image": "",
-          "link_url": ""
-        },
-        {
-          "id": "3",
+          "id": "",
           "title": "",
           "description": "",
           "image": "",
