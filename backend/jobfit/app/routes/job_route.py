@@ -239,7 +239,7 @@ async def import_job_from_url(
     - Glassdoor
     - Workday
     """
-    from app.services.url_ingest import url_ingest_service
+    from app.services.url_ingestion import url_ingest_service
     
     fetch_method = "provided"
     detected_platform = None
